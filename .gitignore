@@ -1,5 +1,27 @@
-# Ignore macOS .DS_Store files
+# macOS
 .DS_Store
 
-# Ignore build directory
-build/
+# Arduino / ESP build outputs
+DuduClock_Firmware/build*/
+cpp-display-diagnostic/build*/
+cpp-tft-espi-diagnostic/build*/
+arduino-v2.1.2/**/build*/
+upstream-pr/**/build*/
+v2.1.2/**/build*/
+
+# Local archives, snapshots, and diagnostic copies
+backup/
+arduino-v2.1.2/
+cpp-display-diagnostic/
+cpp-tft-espi-diagnostic/
+upstream-pr/
+v2.1.2/
+
+# Rust build outputs
+esp32c3-display-rust/target/
+esp32c3-display-rust/src/config.rs
+
+# Local tooling/cache files
+.idea/
+.vscode/
+*.swp

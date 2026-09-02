@@ -34,23 +34,41 @@ const int PWM_DUTY_CYCLE = 255; // 100% duty cycle (maximum brightness)
 
 BrightnessManager brightManager(0, 255);
 
+// Keep this volatile so the complete application and TFT_eSPI call graph stay
+// linked while we run the hardware display diagnostic.
+volatile bool displayDiagnosticMode = true;
+const uint16_t displayDiagnosticColors[] = {
+  TFT_RED, TFT_GREEN, TFT_BLUE, TFT_WHITE, TFT_BLACK
+};
+const char* displayDiagnosticNames[] = {
+  "RED", "GREEN", "BLUE", "WHITE", "BLACK"
+};
+
 void setup() {
   Serial.begin(115200);
 
-  brightManager.init();
- // Initialize PWM channel
-  ledcSetup(PWM_CHANNEL, PWM_FREQ, PWM_RESOLUTION);
-  
-  // Attach PWM channel to GPIO pin
-  ledcAttachPin(GATE_PIN, PWM_CHANNEL);
-  
-  // Set PWM duty cycle to 100% (maximum brightness)
-  ledcWrite(PWM_CHANNEL, 127);
+  if (!displayDiagnosticMode) {
+    brightManager.init();
+    // Initialize PWM channel
+    ledcSetup(PWM_CHANNEL, PWM_FREQ, PWM_RESOLUTION);
+    
+    // Attach PWM channel to GPIO pin
+    ledcAttachPin(GATE_PIN, PWM_CHANNEL);
+    
+    // Set PWM duty cycle
+    ledcWrite(PWM_CHANNEL, 127);
+  }
 
   // TFT初始化
   tftInit();
+  if (displayDiagnosticMode) {
+    Serial.println("FULL_FIRMWARE_DISPLAY_DIAGNOSTIC");
+    Serial.println("GPIO6=UNTOUCHED NETWORK=SKIPPED");
+    return;
+  }
   // 显示系统启动文字
-  drawText("系统启动中...");
+  drawText("Hello Yingqing!");
+  delay(2000);
   // 测试的时候，先写入WiFi信息，省的配网，生产环境请注释掉
   // setInfo4Test();
   // 查询是否有配置过Wifi，没有->进入Wifi配置页面（0），有->进入天气时钟页面（1）
@@ -82,6 +100,16 @@ void setup() {
 }
 
 void loop() {
+
+  if (displayDiagnosticMode) {
+    static size_t displayDiagnosticFrame = 0;
+    tft.fillScreen(displayDiagnosticColors[displayDiagnosticFrame]);
+    Serial.print("FRAME=");
+    Serial.println(displayDiagnosticNames[displayDiagnosticFrame]);
+    displayDiagnosticFrame = (displayDiagnosticFrame + 1) % 5;
+    delay(2500);
+    return;
+  }
 
   brightManager.handle(); 
 
