@@ -1,5 +1,8 @@
 
 # DuduClock 嘟嘟天气时钟代码固件
+
+本目录的 Arduino/C++ 固件基于原作者 [leezicai/DuduClock_Firmware](https://github.com/leezicai/DuduClock_Firmware)，保留原项目来源说明；本仓库后续开发与 Rust 固件位于上层项目目录。
+
 ## [PCB 外壳模型 组装视频在这里](https://github.com/leezicai/DuDuClock)
 
 ### 原码大聪明老师, 增加内容: 和天气数据可在配置时一起配置, 刷入固件即用
