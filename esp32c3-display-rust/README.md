@@ -15,7 +15,7 @@
 - CS：GPIO7
 - DC：GPIO4
 - RST：GPIO5
-- GPIO6：最小显示固件不操作
+- GPIO6：保持复位态；该硬件版本主动驱动此脚可能导致灰白或亮度异常
 - 像素格式：RGB565，MADCTL BGR
 - 反相：发送 `INVOFF`（命令 `0x20`）
 

@@ -44,7 +44,7 @@ esp32-2.4Inch/
 | **CS**   | `GPIO 7`  | 屏幕 SPI 片选引脚 |
 | **DC**   | `GPIO 4`  | 屏幕数据 / 命令选择引脚 |
 | **RST**  | `GPIO 5`  | 屏幕硬件复位引脚 |
-| **BL**   | `GPIO 6`  | 后续源码版本将其用于背光 PWM；官方 2.1.2 与已验证最小 Rust 显示均可不操作此脚 |
+| **BL**   | `GPIO 6`  | 背光 NMOS 栅极；该硬件版本保持复位态更稳定 |
 | **KEY**  | `GPIO 8`  | 板载功能按键 |
 | **SDA**  | `GPIO 8`  | I2C 数据（温湿度传感器 AHT20/SHT30） |
 | **SCL**  | `GPIO 9`  | I2C 时钟（温湿度传感器 AHT20/SHT30） |
@@ -68,7 +68,7 @@ uv run --with esptool esptool --port /dev/cu.usbmodem1101 write-flash 0x0 backup
 * 架构：`riscv32imc-unknown-none-elf`
 * 底层 HAL：`esp-hal 1.1.2` (`no_std`)
 * 图形引擎：`embedded-graphics 0.8`
-* 已验证参数：CPU 80MHz；SPI 27MHz / Mode 0；SCLK=2、MOSI=3、CS=7、DC=4、RST=5；GPIO6 不操作。
+* 已验证参数：CPU 80MHz；SPI 27MHz / Mode 0；SCLK=2、MOSI=3、CS=7、DC=4、RST=5；GPIO6 保持复位态。
 * 实机状态、画面内容、编译和烧录命令见 [`esp32c3-display-rust/README.md`](esp32c3-display-rust/README.md)。
 
 ---

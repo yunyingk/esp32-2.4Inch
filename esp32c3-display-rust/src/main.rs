@@ -291,7 +291,8 @@ fn main() -> ! {
     println!("  DuduClock ESP32-C3 Wi-Fi & AI Receiver  ");
     println!("==========================================");
 
-    // 2. 初始化 ST7789 屏幕 (320x240 横屏)
+    // 2. 初始化 ST7789 屏幕 (320x240 横屏)。GPIO6 保持复位态，
+    //    该硬件版本主动驱动背光脚可能导致灰白或亮度异常。
     let sclk = peripherals.GPIO2;
     let mosi = peripherals.GPIO3;
     let cs = Output::new(peripherals.GPIO7, Level::High, OutputConfig::default());
